@@ -1,4 +1,4 @@
-import Agent from "../models/agent.model"
+import Agent from "../models/agent.model.js"
 
 export const createAgent = async(req,res)=>{
     try {
@@ -33,3 +33,28 @@ export const getAllAgents = async(req,res)=>{
     }
 }
 
+
+export const getAgentById = async(req,res)=>{
+    try {
+       const userId=req.user._id
+       const agentId=req.params.id
+        const agent=await Agent.findById(agentId)
+
+        return res.status(200).json(agent)
+    } catch (error) {
+        return res.status(500).json({message:`get  agent by id error ${error}`})
+    }
+}
+
+
+export const ge = async(req,res)=>{
+    try {
+       const userId=req.user._id
+       const agentId=req.params.id
+        const agent=await Agent.findById(agentId)
+
+        return res.status(200).json(agent)
+    } catch (error) {
+        return res.status(500).json({message:`get  agent by id error ${error}`})
+    }
+}
