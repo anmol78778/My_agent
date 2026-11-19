@@ -90,6 +90,8 @@ import { Input } from "@/components/ui/input"
 import {signInWithPopup} from "firebase/auth"
 import {auth,googleProvider} from "@/firebase" 
 import { login } from "@/features/auth"
+import { useDispatch } from "react-redux"
+import { setUserData } from "@/redux/userSlice"
 
 export function LoginForm({
   className,
@@ -98,7 +100,7 @@ export function LoginForm({
 
 
 
-
+  const dispatch=useDispatch()
   const handleGoogleLogin = async () => {
     try{
      const result = await signInWithPopup(auth,googleProvider)
@@ -107,6 +109,7 @@ export function LoginForm({
     //  console.log(token)
      const data = await login(token)
      console.log(data)
+     dispatch(setUserData(data))
     }catch(error){
         console.log("FULL FIREBASE ERROR:", error);
   
