@@ -36,6 +36,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDb from "./config/db.js";
 import authRouter from "./routes/auth.routes.js";
+import agentRouter from "./routes/agent.routes.js";
 
 dotenv.config();
 
@@ -65,6 +66,7 @@ app.get("/test", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/agent", agentRouter);
 
 // Start server
 const server = app.listen(PORT, "0.0.0.0", async () => {
