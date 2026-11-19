@@ -68,20 +68,20 @@ function Home() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align='end' className={`w-56 ${menuContent}`}>
 
-                                <DropdownMenuItem asChild ><Link to={"/agents"} className='flex items-center gap-2.5 py-2.5'><Bot /> My Agents</Link></DropdownMenuItem>
+                                <DropdownMenuItem aschild='true' ><Link to={"/agents"} className='flex items-center gap-2.5 py-2.5'><Bot /> My Agents</Link></DropdownMenuItem>
 
                                 <DropdownMenuSeparator className={menuSeparator} />
-                                <DropdownMenuItem asChild ><Link to={"/agents/new"} className='flex items-center gap-2.5 py-2.5'><Plus /> Create New Agent</Link></DropdownMenuItem>
+                                <DropdownMenuItem aschild='true' ><Link to={"/agents/new"} className='flex items-center gap-2.5 py-2.5'><Plus /> Create New Agent</Link></DropdownMenuItem>
 
 
                                 <DropdownMenuSeparator className={menuSeparator} />
-                                <DropdownMenuItem asChild ><Link to={"/integrations"} className='flex items-center gap-2.5 py-2.5'><Settings2 /> Integration </Link></DropdownMenuItem>
+                                <DropdownMenuItem aschild='true' ><Link to={"/integrations"} className='flex items-center gap-2.5 py-2.5'><Settings2 /> Integration </Link></DropdownMenuItem>
 
                             </DropdownMenuContent>
                         </DropdownMenu>
 
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            <DropdownMenuTrigger aschild='true'>
                                 <Button type="button"
                                     aria-label="Open profile menu"
                                     className="flex size-9 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/[0.05]">
@@ -98,7 +98,7 @@ function Home() {
                                     </div>
                                    </div>
                                 <DropdownMenuSeparator className={menuSeparator} />
-                               <DropdownMenuItem onClick={(e)=>{e.preventDefault();handleLogOut()}} asChild className="cursor-pointer gap-2.5 rounded-xl py-2.5 text-red-400 focus:bg-red-500/10 focus:text-red-400">
+                               <DropdownMenuItem onClick={(e)=>{e.preventDefault();handleLogOut()}} aschild='true' className="cursor-pointer gap-2.5 rounded-xl py-2.5 text-red-400 focus:bg-red-500/10 focus:text-red-400">
                                  
                                 {logoutLoading ? "Logging out..." : <><LogOut size={16}/> Logout</>}
                                 </DropdownMenuItem>
