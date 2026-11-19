@@ -1,0 +1,10 @@
+# Google service account credentials
+Backend/serviceAccountkey.json
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+**/node_modules/
