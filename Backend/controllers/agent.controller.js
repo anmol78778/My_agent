@@ -47,14 +47,14 @@ export const getAgentById = async(req,res)=>{
 }
 
 
-export const ge = async(req,res)=>{
+export const deleteAgent = async(req,res)=>{
     try {
-       const userId=req.user._id
+       
        const agentId=req.params.id
-        const agent=await Agent.findById(agentId)
+        const agent=await Agent.findByIdAndDelete(agentId)
 
         return res.status(200).json(agent)
     } catch (error) {
-        return res.status(500).json({message:`get  agent by id error ${error}`})
+        return res.status(500).json({message:`delete agent error ${error}`})
     }
 }
