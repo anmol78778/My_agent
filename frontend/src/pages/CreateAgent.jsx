@@ -37,10 +37,21 @@ const fieldCls =
 
 function CreateAgent() {
 
-  const [name,setName]=useState("")
-  const [instructions,setInstructions]=useState("")
-  const [knowledgeBase,setknowledgeBase]=useState("")
-  const [selectedTool,setSelectedTool]=useState("")
+  const [name, setName] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [knowledgeBase, setknowledgeBase] = useState("")
+  const [tools, setTools] = useState([])
+
+  const toggleTool = (tool) => {
+    setTools((prevTools) => {
+      if(prevTools?.includes(tool)){
+          return prevTools?.filter((t) => t !== tool)
+      }else{
+            return [...prevTools, tool]
+      }
+       
+    })
+  }
 
   return (
     <div className='relative min-h-screen bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
@@ -83,8 +94,8 @@ function CreateAgent() {
                   Agent Name
                 </label>
                 <Input
-                onchange={(e)=>setName(e.target.value)}
-                value={name}
+                  onchange={(e) => setName(e.target.value)}
+                  value={name}
                   placeholder="e.g. Research Assistant"
                   maxLength={100}
                   required
@@ -97,8 +108,8 @@ function CreateAgent() {
                   Instructions
                 </label>
                 <Input
-                onchange={(e)=>setInstructions(e.target.value)}
-                value={instructions}
+                  onchange={(e) => setInstructions(e.target.value)}
+                  value={instructions}
                   placeholder="e.g. Instructions"
                   maxLength={100}
                   required
@@ -112,8 +123,8 @@ function CreateAgent() {
                   Knowledge Base
                 </label>
                 <Textarea
-                onchange={(e)=>setknowledgeBase(e.target.value)}
-                value={knowledgeBase}
+                  onchange={(e) => setknowledgeBase(e.target.value)}
+                  value={knowledgeBase}
                   placeholder="You are a helpful AI assistant. Your job is to..."
                   required
                   className={`min-h-40 resize-y leading-6 ${fieldCls}`}
@@ -133,11 +144,23 @@ function CreateAgent() {
               </div>
 
               <div className='overflow-hidden rounded-2xl border border-white/10'>
-                      {availableTools.map((t,i)=>{
-                        return (<div>
+                {availableTools.map((t, index) => {
+                  const selected = tools?.includes(t.id)
+                  return (
+                    <button
+                    key={t.id}
+                    onClick={()=>toggleTool(t.id)}
+                      className={`flex w-full items-center justify-between gap-4 px-4
+py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
+  ${selected
+                          ? "bg-white/[0.09]"
+                          : "bg-white/[0.02] hover:bg-white/[0.05]"
+                        }`}
+                    >
 
-                        </div>)
-                      })}
+                    </button>
+                  )
+                })}
               </div>
             </section>
 
