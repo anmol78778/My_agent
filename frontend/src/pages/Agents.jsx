@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { getAllAgents } from '@/features/agent'
-import { ArrowLeft, Bot, Plus, Workflow } from 'lucide-react'
+import { ArrowLeft, Bot, Plus, Search, Workflow } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
@@ -14,7 +15,7 @@ const whiteBtn =
 
 function Agents() {
   const [agents, setAgents] = useState([])
-  const [search,setSearch]=useState("")
+  const [search, setSearch] = useState("")
   const fetchAgents = async () => {
     try {
       const data = await getAllAgents()
@@ -28,17 +29,17 @@ function Agents() {
     fetchAgents()
   }, [])
 
-  const filteredAgent=agents.filter((agent)=>{
-    const query=search.toLowerCase()
+  const filteredAgent = agents.filter((agent) => {
+    const query = search.toLowerCase()
 
     return (
       agent?.name?.toLowerCase()?.includes(query) ||
       agent?.instructions?.toLowerCase()?.includes(query) ||
-      agent?.knowledgeBase?.toLowerCase()?.includes(query) 
+      agent?.knowledgeBase?.toLowerCase()?.includes(query)
     )
   })
 
-  
+
   return (
     <div className='relative min-h-screen bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)]" />
@@ -89,9 +90,28 @@ function Agents() {
             </Button>
           </div>
 
-          <div>
+          <div className='mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+            <div className='relative w-full sm:max-w-sm'>
+            <Search
+              size={17}
+              className="absolute z-20 left-3 top-1/2 -translate-y-1/2 text-zinc-500"
+            />
 
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search agents..."
+              className="h-10 rounded-xl border-white/10 bg-white/[0.04] pl-9 text-white backdrop-blur-xl placeholder:text-zinc-500 focus-visible:border-white/25 focus-visible:ring-white/10"
+            />
           </div>
+
+          <p className='text-xs text-zinc-500'>
+            {agents.length} Agents
+          </p>
+          </div>
+
+          
+          
         </main>
 
       </div>
