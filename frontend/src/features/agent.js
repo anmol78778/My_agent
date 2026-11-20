@@ -3,7 +3,7 @@ import api from "@/api"
 
 export const createAgent = async ({name,knowledgeBase,instructions,tools}) =>{
     try {
-        const {data} = await api.post("/api/agent",{name,knowledgeBase,instructions,tools})
+        const {data} = await api.post("/api/agent/create",{name,knowledgeBase,instructions,tools})
         
         return data
     } catch (error) {
