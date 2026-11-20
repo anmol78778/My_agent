@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { getAllAgents } from '@/features/agent'
+import { deleteAgent, getAllAgents } from '@/features/agent'
 import { ArrowLeft, Bot, Plus, RefreshCcw, Search, Trash, Workflow } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
@@ -43,6 +43,17 @@ function Agents() {
       agent?.knowledgeBase?.toLowerCase()?.includes(query)
     )
   })
+
+  const handleDelete=async (id)=>{
+    try {
+      await deleteAgent(id)
+      setAgents((prev)=>{
+        return prev.filter((a)=>a?._id!==id)
+      })
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
 
   return (
@@ -136,7 +147,7 @@ function Agents() {
                         <Bot size={22} />
                       </div>
 
-                      <button className="rounded-lg p-2 text-zinc-500 transition hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50">
+                      <button onClick={()=>handleDelete(agent?._id)} className="rounded-lg p-2 text-zinc-500 transition hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50">
                         <Trash size={16} />
                       </button>
                     </div>
@@ -177,7 +188,22 @@ function Agents() {
               })}
             </div>
           ) : (
-            <div></div>
+            <div className="mt-6 flex min-h-72 flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.02] px-5 text-center">
+              <div className="grid size-12 place-items-center rounded-xl bg-white text-zinc-900">
+                <Bot size={23} />
+              </div>
+
+              <h2 className="mt-4 text-base font-medium text-white">
+                {search ? "No agents found" : "No agents yet"}
+              </h2>
+
+              <p className="mt-2 max-w-sm text-sm leading-6 text-zinc-500">
+                {search
+                  ? "Try searching with another name or keyword."
+                  : "Create your first AI agent to get started."}
+              </p>
+              
+            </div>
           )}
 
 
