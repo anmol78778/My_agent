@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Bot, Workflow } from 'lucide-react'
+import { ArrowLeft, Bot, Check, Workflow } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
 
@@ -44,12 +44,12 @@ function CreateAgent() {
 
   const toggleTool = (tool) => {
     setTools((prevTools) => {
-      if(prevTools?.includes(tool)){
-          return prevTools?.filter((t) => t !== tool)
-      }else{
-            return [...prevTools, tool]
+      if (prevTools?.includes(tool)) {
+        return prevTools?.filter((t) => t !== tool)
+      } else {
+        return [...prevTools, tool]
       }
-       
+
     })
   }
 
@@ -94,7 +94,7 @@ function CreateAgent() {
                   Agent Name
                 </label>
                 <Input
-                  onchange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   value={name}
                   placeholder="e.g. Research Assistant"
                   maxLength={100}
@@ -108,7 +108,7 @@ function CreateAgent() {
                   Instructions
                 </label>
                 <Input
-                  onchange={(e) => setInstructions(e.target.value)}
+                  onChange={(e) => setInstructions(e.target.value)}
                   value={instructions}
                   placeholder="e.g. Instructions"
                   maxLength={100}
@@ -123,7 +123,7 @@ function CreateAgent() {
                   Knowledge Base
                 </label>
                 <Textarea
-                  onchange={(e) => setknowledgeBase(e.target.value)}
+                  onChange={(e) => setknowledgeBase(e.target.value)}
                   value={knowledgeBase}
                   placeholder="You are a helpful AI assistant. Your job is to..."
                   required
@@ -148,8 +148,9 @@ function CreateAgent() {
                   const selected = tools?.includes(t.id)
                   return (
                     <button
-                    key={t.id}
-                    onClick={()=>toggleTool(t.id)}
+                    type='button'
+                      key={t.id}
+                      onClick={() => toggleTool(t.id)}
                       className={`flex w-full items-center justify-between gap-4 px-4
 py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
   ${selected
@@ -157,6 +158,25 @@ py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
                           : "bg-white/[0.02] hover:bg-white/[0.05]"
                         }`}
                     >
+
+                      <div>
+                        <p className='text-xs font-medium text-zinc-100'>
+                          {t.name}
+                        </p>
+
+                        <p className='mt-1 text-[11px] text-zinc-500'>
+                          {t.description}
+                        </p>
+                      </div>
+
+                      <span
+                        className={`flex size-[18px] shrink-0 items-center justify-center rounded-md border ${selected
+                            ? "border-white bg-white text-zinc-900"
+                            : "border-white/20 text-transparent"
+                          }`}
+                      >
+                        {selected && <Check size={12} />}
+                      </span>
 
                     </button>
                   )
