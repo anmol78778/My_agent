@@ -1,9 +1,117 @@
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { ArrowLeft, Bot, Workflow } from 'lucide-react'
 import React from 'react'
+import { Link } from 'react-router'
+
+
+const availableTools = [
+  {
+    id: "calculator",
+    name: "Calculator",
+    description: "Perform mathematical calculations",
+  },
+  {
+    id: "web.search",
+    name: "Web Search",
+    description: "Search for information on the web",
+  },
+  {
+    id: "gmail.read",
+    name: "Read Emails",
+    description: "Read and summarize emails",
+  },
+  {
+    id: "gmail.send",
+    name: "Send Emails",
+    description: "Draft and send emails",
+  },
+];
+
+const darkPanel =
+  "border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl";
+
+const fieldCls =
+  "rounded-xl border border-white/10 bg-white/[0.04] text-sm text-white backdrop-blur-xl placeholder:text-zinc-500 focus-visible:border-white/25 focus-visible:ring-0";
+
 
 function CreateAgent() {
   return (
-    <div>
-      
+    <div className='relative min-h-screen bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)]" />
+
+      <div className='relative z-10'>
+        <header
+          className='z-30 flex h-16 shrink-0 items-center justify-between px-4 sm:px-6'
+        >
+          <Link to={"/"} className='flex items-center gap-2.5'>
+            <span className='grid size-8 place-items-center rounded-lg bg-white text-zinc-900'><Workflow size={17} /></span>
+            <span className='text-sm font-medium tracking-tight'>Automate AI</span>
+          </Link>
+
+          <Link to='/' className='flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2 text-xs  text-zinc-300 transition hover:bg-white/10 hover:text-white'>
+            <ArrowLeft size={14} />
+            <span>Back to chat</span>
+          </Link>
+        </header>
+        <main className='mx-auto w-full max-w-2xl px-5 pb-12 pt-10 sm:px-8 sm:pt-14'>
+          <div className='mb-9'>
+            <div className='mb-5 grid size-12 place-items-center rounded-2xl bg-white text-zinc-900 shadow-[0_10px_40px_rgba(255,255,255,0.12)]'>
+              <Bot size={24} />
+            </div>
+
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Create an agent
+            </h1>
+
+            <p className="mt-2 text-sm text-zinc-500">
+              Configure your AI agent and define what it can do.
+            </p>
+          </div>
+
+
+          <form className={`space-y-7 rounded-3xl p-5 sm:p-7 ${darkPanel}`}>
+                 <section className='space-y-5'>
+                    <div>
+                      <label htmlFor="aagent-name" className='mb-2 block text-xs font-medium to-zinc-300'>
+                            Agent Name
+                      </label>
+                      <Input
+                      placeholder="e.g. Research Assistant"
+                      maxLength={100}
+                      required
+                      className={`h-11 ${fieldCls}`}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="instructions" className='mb-2 block text-xs font-medium to-zinc-300'>
+                            Instructions
+                      </label>
+                      <Input
+                      placeholder="e.g. Instructions"
+                      maxLength={100}
+                      required
+                      className={`h-11 ${fieldCls}`}
+                      />
+                    </div>
+
+
+                    <div>
+                      <label htmlFor="knowledgeBase" className='mb-2 block text-xs font-medium to-zinc-300'>
+                            Knowledge Base
+                      </label>
+                      <Textarea
+                      placeholder="You are a helpful AI assistant. Your job is to..."
+                      required
+                      className={`min-h-40 resize-y leading-6 ${fieldCls}`}
+                      />
+                    </div>
+                 </section>
+          </form>
+        </main>
+
+      </div>
     </div>
   )
 }
