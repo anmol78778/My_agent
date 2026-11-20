@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Bot, Workflow } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router'
 
 
@@ -36,6 +36,12 @@ const fieldCls =
 
 
 function CreateAgent() {
+
+  const [name,setName]=useState("")
+  const [instructions,setInstructions]=useState("")
+  const [knowledgeBase,setknowledgeBase]=useState("")
+  const [selectedTool,setSelectedTool]=useState("")
+
   return (
     <div className='relative min-h-screen bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)]" />
@@ -71,43 +77,70 @@ function CreateAgent() {
 
 
           <form className={`space-y-7 rounded-3xl p-5 sm:p-7 ${darkPanel}`}>
-                 <section className='space-y-5'>
-                    <div>
-                      <label htmlFor="aagent-name" className='mb-2 block text-xs font-medium to-zinc-300'>
-                            Agent Name
-                      </label>
-                      <Input
-                      placeholder="e.g. Research Assistant"
-                      maxLength={100}
-                      required
-                      className={`h-11 ${fieldCls}`}
-                      />
-                    </div>
+            <section className='space-y-5'>
+              <div>
+                <label htmlFor="aagent-name" className='mb-2 block text-xs font-medium to-zinc-300'>
+                  Agent Name
+                </label>
+                <Input
+                onchange={(e)=>setName(e.target.value)}
+                value={name}
+                  placeholder="e.g. Research Assistant"
+                  maxLength={100}
+                  required
+                  className={`h-11 ${fieldCls}`}
+                />
+              </div>
 
-                    <div>
-                      <label htmlFor="instructions" className='mb-2 block text-xs font-medium to-zinc-300'>
-                            Instructions
-                      </label>
-                      <Input
-                      placeholder="e.g. Instructions"
-                      maxLength={100}
-                      required
-                      className={`h-11 ${fieldCls}`}
-                      />
-                    </div>
+              <div>
+                <label htmlFor="instructions" className='mb-2 block text-xs font-medium to-zinc-300'>
+                  Instructions
+                </label>
+                <Input
+                onchange={(e)=>setInstructions(e.target.value)}
+                value={instructions}
+                  placeholder="e.g. Instructions"
+                  maxLength={100}
+                  required
+                  className={`h-11 ${fieldCls}`}
+                />
+              </div>
 
 
-                    <div>
-                      <label htmlFor="knowledgeBase" className='mb-2 block text-xs font-medium to-zinc-300'>
-                            Knowledge Base
-                      </label>
-                      <Textarea
-                      placeholder="You are a helpful AI assistant. Your job is to..."
-                      required
-                      className={`min-h-40 resize-y leading-6 ${fieldCls}`}
-                      />
-                    </div>
-                 </section>
+              <div>
+                <label htmlFor="knowledgeBase" className='mb-2 block text-xs font-medium to-zinc-300'>
+                  Knowledge Base
+                </label>
+                <Textarea
+                onchange={(e)=>setknowledgeBase(e.target.value)}
+                value={knowledgeBase}
+                  placeholder="You are a helpful AI assistant. Your job is to..."
+                  required
+                  className={`min-h-40 resize-y leading-6 ${fieldCls}`}
+                />
+              </div>
+            </section>
+
+            <section>
+              <div className="mb-3">
+                <h2 className="text-xs font-medium text-zinc-300">
+                  Tools
+                </h2>
+
+                <p className="mt-1 text-xs text-zinc-500">
+                  Select the capabilities available to your agent.
+                </p>
+              </div>
+
+              <div className='overflow-hidden rounded-2xl border border-white/10'>
+                      {availableTools.map((t,i)=>{
+                        return (<div>
+
+                        </div>)
+                      })}
+              </div>
+            </section>
+
           </form>
         </main>
 
