@@ -149,6 +149,29 @@ function Agents() {
                       {agent?.instructions || "No instructions provided."}
                     </p>
 
+                    <div className='mt-5 items-center justify-between border-t border-white/[0.08] pt-4'>
+                      <span className='text-xs text-zinc-600'>
+                        My Agents
+                      </span>
+
+                      <Button
+                        asChild
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 gap-1.5 rounded-lg text-zinc-300 hover:bg-white/10 hover:text-white"
+                      >
+                        <Link
+                          to="/"
+                          className="inline-flex items-center gap-1.5"
+                        >
+                          <span>Use agent</span>
+                          <ArrowLeft size={16} className="rotate-180 shrink-0" />
+                        </Link>
+                      </Button>
+                    </div>
+
+
+
                   </div>
                 )
               })}
