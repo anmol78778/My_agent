@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Bot, Check, Workflow } from 'lucide-react'
@@ -41,6 +42,7 @@ function CreateAgent() {
   const [instructions, setInstructions] = useState("")
   const [knowledgeBase, setknowledgeBase] = useState("")
   const [tools, setTools] = useState([])
+  const [error, setError] = useState("")
 
   const toggleTool = (tool) => {
     setTools((prevTools) => {
@@ -148,7 +150,7 @@ function CreateAgent() {
                   const selected = tools?.includes(t.id)
                   return (
                     <button
-                    type='button'
+                      type='button'
                       key={t.id}
                       onClick={() => toggleTool(t.id)}
                       className={`flex w-full items-center justify-between gap-4 px-4
@@ -171,8 +173,8 @@ py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
 
                       <span
                         className={`flex size-[18px] shrink-0 items-center justify-center rounded-md border ${selected
-                            ? "border-white bg-white text-zinc-900"
-                            : "border-white/20 text-transparent"
+                          ? "border-white bg-white text-zinc-900"
+                          : "border-white/20 text-transparent"
                           }`}
                       >
                         {selected && <Check size={12} />}
@@ -183,6 +185,32 @@ py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
                 })}
               </div>
             </section>
+
+            {error && (
+              <p
+                role="alert"
+                className="rounded-xl border border-red-500/20 bg-red-500/[0.08] px-4 py-3 text-xs text-red-300"
+              >
+                {error}
+              </p>
+            )}
+
+            <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] pt-5">
+              <Button
+                type="button"
+                variant="ghost"
+                className="rounded-xl text-xs text-zinc-400 hover:bg-white/10 hover:text-white"
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type="submit"
+                className="h-10 rounded-xl bg-white px-5 text-xs font-medium text-zinc-900 hover:bg-zinc-200"
+              >
+                Create Agent
+              </Button>
+            </div>
 
           </form>
         </main>
