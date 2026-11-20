@@ -68,6 +68,7 @@ function CreateAgent() {
     })
     console.log(data)
     setLoading(false)
+    navigate("/agents")
     } catch (error) {
        console.log(error)
        setError(error.response.data.message ||"unable to create agent")
