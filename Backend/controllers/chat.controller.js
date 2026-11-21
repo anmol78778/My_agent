@@ -1,14 +1,14 @@
 import { HumanMessage } from "@langchain/core/messages"
-import chatGraph from "../utils/chatGraph"
+import chatGraph from "../utils/chatGraph.js"
 
-export const chat = async (requestAnimationFrame,res)=>{
+export const chat = async (req,res)=>{
     try {
         const {message}=req.body
+        const threadId=String(req.user._id)
         if(!threadId || !message){
             return res.status(400).json({message:"threadId and messsage required"})
         }
 
-        const threadId=String(req.user._id)
         const data=await chatGraph.invoke({
             messages:[
                 new HumanMessage(message)

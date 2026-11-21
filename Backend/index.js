@@ -32,17 +32,20 @@
 
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDb from "./config/db.js";
 import authRouter from "./routes/auth.routes.js";
 import agentRouter from "./routes/agent.routes.js";
+import chatRouter from "./routes/chat.routes.js";
 
-dotenv.config();
+
 
 const app = express();
 const PORT = 8000;
-
+console.log(process.env.GROQ_API_KEY)
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -67,6 +70,7 @@ app.get("/test", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/agent", agentRouter);
+app.use("/api/chat",chatRouter)
 
 // Start server
 const server = app.listen(PORT, "0.0.0.0", async () => {

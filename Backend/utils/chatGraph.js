@@ -3,8 +3,18 @@ import { StateSchema, MessagesValue, StateGraph, START, END, MessagesAnnotation 
 import { MongoClient } from "mongodb";
 import { MongoDBSaver } from "@langchain/langgraph-checkpoint-mongodb";
 
+import dotenv from "dotenv";
+import { fileURLToPath } from "node:url";
+
+dotenv.config({
+    path: fileURLToPath(
+        new URL("../.env", import.meta.url)
+    )
+});
+
 const llm = new ChatGroq({
     model: "openai/gpt-oss-120b",
+    apiKey: process.env.GROQ_API_KEY,
     temperature: 0,
     maxTokens: undefined,
     maxRetries: 2,
