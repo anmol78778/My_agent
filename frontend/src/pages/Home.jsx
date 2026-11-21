@@ -39,7 +39,16 @@ const whiteBtn =
     "rounded-xl border-0 bg-white text-zinc-900 hover:bg-zinc-200 hover:text-zinc-900";
 function Home() {
     const [logoutLoading, setLogoutLoading] = useState(false)
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState([
+        {
+            role: "user",
+            content: "hello"
+        },
+        {
+            role: "assistant",
+            content: "hi"
+        }
+    ])
     const { userData } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const handleLogOut = async () => {
@@ -130,8 +139,27 @@ function Home() {
                                         </p>
                                     </div>
                                 )}
+
+
+                                {messages.map((message, index) => (
+                                    <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                                        {
+                                            message.role === "assistant" && (
+                                                <div className="mr-3 mt-1 grid size-8 shrink-0 place-items-center rounded-lg bg-white text-zinc-900">
+                                                    <Workflow size={15} />
+                                                </div>
+                                            )
+                                        }
+
+                                        <div className={`max-w-[90%] break-words px-4 py-3 text-sm leading-7 sm:max-w-[80%] ${message.role === "user" ? `rounded-2xl rounded-br-md text-white ${darkPanel}` : "text-zinc-200"}`}>
+                                            <p className='whitespace-pre-wrap'>{message.content}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
+
+                       
                     </section>
                 </main>
 
