@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Agents from './pages/Agents'
 import Integration from './pages/Integration'
 import CreateAgent from './pages/CreateAgent'
+import { chat } from './features/chat'
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
     const fetch = async ()=>{
            try {
             const data = await me()
+            // checking ai responses
+            const ai=await chat("whats my name")
+            console.log(ai)
             // console.log(data)
             dispatch(setUserData(data))
            } catch (error) {

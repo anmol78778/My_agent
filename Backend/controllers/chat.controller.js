@@ -4,9 +4,9 @@ import chatGraph from "../utils/chatGraph.js"
 export const chat = async (req,res)=>{
     try {
         const {message}=req.body
-        const threadId=String(req.user._id)
-        if(!threadId || !message){
-            return res.status(400).json({message:"threadId and messsage required"})
+        const threadId=(req.user._id).toString()
+        if(!message){
+            return res.status(400).json({message:"messsage required"})
         }
 
         const data=await chatGraph.invoke({
@@ -14,7 +14,7 @@ export const chat = async (req,res)=>{
                 new HumanMessage(message)
             ]},
             {
-                configurable:{threadId}
+                configurable:{thread_id:threadId}
             }
         )
 
