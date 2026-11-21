@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { deleteAgent, getAllAgents } from '@/features/agent'
+import { setDelete } from '@/redux/agentSlice'
 import { ArrowLeft, Bot, Plus, RefreshCcw, Search, Trash, Workflow } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
 
 
@@ -14,25 +16,12 @@ const whiteBtn =
 
 
 function Agents() {
-  const [agents, setAgents] = useState([])
+  // const [agents, setAgents] = useState([])
   const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(false)
-
-  const fetchAgents = async () => {
-    setLoading(true)
-    try {
-      const data = await getAllAgents()
-      setAgents(data)
-      setLoading(false)
-      console.log(data)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    fetchAgents()
-  }, [])
+  // const [loading, setLoading] = useState(false)
+  const dispatch=useDispatch()
+  const {agents,agentsLoading:loading}=useSelector(state=>state.agent)
+ 
 
   const filteredAgents = agents.filter((agent) => {
     const query = search.toLowerCase()
@@ -47,9 +36,7 @@ function Agents() {
   const handleDelete=async (id)=>{
     try {
       await deleteAgent(id)
-      setAgents((prev)=>{
-        return prev.filter((a)=>a?._id!==id)
-      })
+      dispatch(setDelete(id))
     } catch (error) {
         console.log(error)
     }

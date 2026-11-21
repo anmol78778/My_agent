@@ -1,4 +1,4 @@
-import { Bot, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
+import { Bot, ImagePlus, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router';
 
@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/features/auth';
 import { setUserData } from '@/redux/userSlice';
+import { Textarea } from '@/components/ui/textarea';
 
 
 
@@ -159,7 +160,38 @@ function Home() {
                             </div>
                         </div>
 
-                       
+                        <div className='z-20 w-full shrink-0 px-3 pb-3 pt-2 sm:px-5 sm:pb-4'>
+                            <form className={`mx-auto w-full max-w-2xl rounded-2xl p-3 transition-colors focus-within:border-white/25 ${darkPanel}`}>
+                                <Textarea
+                                    placeholder={"Ask me anything..."}
+                                    className={`min-h-20 resize-none border-0 !bg-transparent px-2 py-1.5 text-sm text-white shadow-none placeholder:text-zinc-500 focus-visible:ring-0 ${hideScrollbar}`}
+                                />
+
+                                <div className='flex items-center justify-between gap-3 pt-2'>
+                                    <div className='flex min-w-0 items-center gap-2'>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            aria-label="Attach image"
+                                            title="Attach image"
+                                            className="size-8 rounded-lg text-zinc-300 hover:bg-white/10 hover:text-white"
+                                        >
+                                            <ImagePlus size={17} />
+                                        </Button>
+
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+
+                                            </DropdownMenuTrigger>
+                                        </DropdownMenu>
+
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+
                     </section>
                 </main>
 
