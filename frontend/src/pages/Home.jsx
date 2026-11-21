@@ -38,16 +38,17 @@ const iconBtn =
 const whiteBtn =
     "rounded-xl border-0 bg-white text-zinc-900 hover:bg-zinc-200 hover:text-zinc-900";
 function Home() {
-    const [logoutLoading,setLogoutLoading]=useState(false)
-    const {userData}=useSelector(state=>state.user)
-    const dispatch=useDispatch()
-    const handleLogOut = async () =>{
+    const [logoutLoading, setLogoutLoading] = useState(false)
+    const [messages, setMessages] = useState([])
+    const { userData } = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    const handleLogOut = async () => {
         console.log("click")
-       setLogoutLoading(true)
-       await logout()
-       dispatch(setUserData(null))
-       setLogoutLoading(false)
-       
+        setLogoutLoading(true)
+        await logout()
+        dispatch(setUserData(null))
+        setLogoutLoading(false)
+
     }
     return (
         <div className='relative flex h-dvh flex-col overflow-hidden bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
@@ -85,31 +86,56 @@ function Home() {
                                 <Button type="button"
                                     aria-label="Open profile menu"
                                     className="flex size-9 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/[0.05]">
-                                    {userData?.profilePicture?<img src={userData?.profilePicture} alt='Profile' referrerPolicy='no-referrer' className='size-full object-cover'/>:<UserRound size={17} className='text-zinc-300'/>}
+                                    {userData?.profilePicture ? <img src={userData?.profilePicture} alt='Profile' referrerPolicy='no-referrer' className='size-full object-cover' /> : <UserRound size={17} className='text-zinc-300' />}
                                 </Button>
 
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align='end' className={`w-64 ${menuContent}`}>
 
-                                   <div className='flex items-center gap-3 px-3 py-3'>
+                                <div className='flex items-center gap-3 px-3 py-3'>
                                     <div className='min-w-0 flex-1'>
                                         <p className='truncate text-sm font-medium'>{userData?.name || "user"}</p>
                                         <p className='truncate text-xs text-zinc-500'>{userData?.email || "email"}</p>
                                     </div>
-                                   </div>
+                                </div>
                                 <DropdownMenuSeparator className={menuSeparator} />
-                               <DropdownMenuItem onClick={(e)=>{e.preventDefault();handleLogOut()}} aschild='true' className="cursor-pointer gap-2.5 rounded-xl py-2.5 text-red-400 focus:bg-red-500/10 focus:text-red-400">
-                                 
-                                {logoutLoading ? "Logging out..." : <><LogOut size={16}/> Logout</>}
+                                <DropdownMenuItem onClick={(e) => { e.preventDefault(); handleLogOut() }} aschild='true' className="cursor-pointer gap-2.5 rounded-xl py-2.5 text-red-400 focus:bg-red-500/10 focus:text-red-400">
+
+                                    {logoutLoading ? "Logging out..." : <><LogOut size={16} /> Logout</>}
                                 </DropdownMenuItem>
 
 
-                                
+
 
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
                 </header>
+
+                <main className='flex min-h-0 flex-1 flex-col'>
+                    <section className='flex min-h-0 flex-1 flex-col'>
+                        <div className={`min-h-0 flex-1 overflow-y-auto ${hideScrollbar}`}>
+                            <div className="mx-auto flex min-h-full w-full max-w-3xl flex-col gap-5 px-4 py-8 sm:px-6">
+                                {messages.length === 0 && (
+                                    <div className='flex flex-1 flex-col items-center justify-center pb-8 text-center'>
+                                        <div className="mb-7 grid size-14 place-items-center rounded-2xl bg-white text-zinc-900">
+                                            <Workflow size={26} />
+                                        </div>
+                                        <p className="text-base text-violet-300/80">Hi, {userData?.name || "User"}</p>
+                                        <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">
+                                            Can I help you with anything?
+                                        </h1>
+                                        <p className="mt-4 max-w-sm text-xs leading-5 text-zinc-500">
+                                            Ask questions, automate tasks, or upload an image to prepare an Instagram post.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+
             </div>
         </div>
     )
