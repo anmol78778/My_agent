@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { deleteAgent, getAllAgents } from '@/features/agent'
-import { setDelete } from '@/redux/agentSlice'
+import { setAgents, setAgentsLoading, setDelete, setSelectedAgent } from '@/redux/agentSlice'
 import { ArrowLeft, Bot, Plus, RefreshCcw, Search, Trash, Workflow } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +16,7 @@ const whiteBtn =
 
 
 function Agents() {
-  // const [agents, setAgents] = useState([])
+   // const [agents, setAgents] = useState([])
   const [search, setSearch] = useState("")
   // const [loading, setLoading] = useState(false)
   const dispatch=useDispatch()
@@ -32,6 +32,23 @@ function Agents() {
       agent?.knowledgeBase?.toLowerCase()?.includes(query)
     )
   })
+
+  const fetchAgents = async () => {
+      dispatch(setAgentsLoading(true))
+      try {
+        const data = await getAllAgents()
+        dispatch(setAgents(data))
+        dispatch(setAgentsLoading(false))
+        console.log(data)
+      } catch (error) {
+        dispatch(setAgentsLoading(false))
+        console.log(error)
+      }
+    }
+
+    useEffect(()=>{
+      fetchAgents()
+    },[])
 
   const handleDelete=async (id)=>{
     try {
@@ -154,6 +171,7 @@ function Agents() {
 
                       <Button
                         asChild
+                        onClick={()=>dispatch(setSelectedAgent(agent.name))}
                         variant="ghost"
                         size="sm"
                         className="h-8 gap-1.5 rounded-lg text-zinc-300 hover:bg-white/10 hover:text-white"

@@ -1,4 +1,4 @@
-import { Bot, ImagePlus, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
+import { Bot, Check, ChevronDown, ImagePlus, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router';
 
@@ -51,6 +51,7 @@ function Home() {
         }
     ])
     const { userData } = useSelector(state => state.user)
+    const { agents, selectedAgent } = useSelector(state => state.agent)
     const dispatch = useDispatch()
     const handleLogOut = async () => {
         console.log("click")
@@ -181,8 +182,37 @@ function Home() {
 
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    className="h-8 max-w-48 gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-2.5 text-xs text-zinc-300 hover:bg-white/10 hover:text-white"
+                                                >
+                                                    <Bot size={14} className='shrink-0' /><span className='truncate'>{selectedAgent || "Agent Not selected "}</span>
+                                                    <ChevronDown size={14} />
+
+                                                </Button>
 
                                             </DropdownMenuTrigger>
+
+                                            <DropdownMenuContent align='start' side='top' className={`mb-2 w-60 ${menuContent}`}>
+                                                {!agents && <DropdownMenuItem className={menuItem}>No Agent Found</DropdownMenuItem>}
+
+                                                {
+                                                    agents?.map((agent, index) => (
+                                                        <DropdownMenuItem key={index}
+                                                            className={`cursor-pointer gap-2 ${menuItem}`} >
+                                                            <Bot size={15} className='shrink-0 text-violet-300' />
+                                                            <span className='truncate'>{agent?.name}</span>
+                                                            {/* {selectedAgent} */}
+                                                            {selectedAgent === agent?.name && <Check className='ml-auto text-xs text-violet-300' />}
+
+
+                                                        </DropdownMenuItem>
+                                                    ))
+                                                }
+
+                                            </DropdownMenuContent>
+
                                         </DropdownMenu>
 
                                     </div>

@@ -8,7 +8,7 @@ export const createAgent = async ({name,knowledgeBase,instructions,tools}) =>{
         return data
     } catch (error) {
         console.log(error)
-        throw error
+        return error
     }
 }
 export const getAllAgents = async () =>{

@@ -67,11 +67,16 @@ function CreateAgent() {
       name,knowledgeBase,instructions,tools
     })
     console.log(data)
+    if(data?.response?.data?.message){
+      console.log(data)
+      setError(data?.response?.data.message)
+      setLoading(false)
+      return;
+    }
     setLoading(false)
     navigate("/agents")
     } catch (error) {
        console.log(error)
-       setError(error.response.data.message ||"unable to create agent")
        setLoading(false)
     }
     
