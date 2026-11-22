@@ -44,8 +44,8 @@ function CreateAgent() {
   const [knowledgeBase, setknowledgeBase] = useState("")
   const [tools, setTools] = useState([])
   const [error, setError] = useState("")
-  const navigate=useNavigate()
-  const [loading,setLoading]=useState(false)
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const toggleTool = (tool) => {
     setTools((prevTools) => {
@@ -58,28 +58,28 @@ function CreateAgent() {
     })
   }
 
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
 
     try {
-      const data=await createAgent({
-      name,knowledgeBase,instructions,tools
-    })
-    console.log(data)
-    if(data?.response?.data?.message){
+      const data = await createAgent({
+        name, knowledgeBase, instructions, tools
+      })
       console.log(data)
-      setError(data?.response?.data?.message)
+      if (data?.response?.data?.message) {
+        console.log(data)
+        setError(data?.response?.data?.message)
+        setLoading(false)
+        return;
+      }
       setLoading(false)
-      return;
-    }
-    setLoading(false)
-    navigate("/agents")
+      navigate("/agents")
     } catch (error) {
-       console.log(error)
-       setLoading(false)
+      console.log(error)
+      setLoading(false)
     }
-    
+
   }
 
   return (
@@ -179,7 +179,7 @@ function CreateAgent() {
                     <button
                       type='button'
                       key={t.id}
-                      onClick={(e) => {e.preventDefault(); toggleTool(t.id)}}
+                      onClick={(e) => { e.preventDefault(); toggleTool(t.id) }}
                       className={`flex w-full items-center justify-between gap-4 px-4
 py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
   ${selected
@@ -227,7 +227,7 @@ py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
                 type="button"
                 variant="ghost"
                 className="rounded-xl text-xs text-zinc-400 hover:bg-white/10 hover:text-white"
-                  onClick={()=> navigate("/")}
+                onClick={() => navigate("/")}
               >
                 Cancel
               </Button>
@@ -237,7 +237,7 @@ py-3.5 text-left transition ${index !== 0 ? "border-t border-white/[0.08]" : ""}
                 onClick={handleSubmit}
                 className="h-10 rounded-xl bg-white px-5 text-xs font-medium text-zinc-900 hover:bg-zinc-200"
               >
-                {loading?"Creating":"Create Agent"}
+                {loading ? "Creating" : "Create Agent"}
                 Create Agent
               </Button>
             </div>
