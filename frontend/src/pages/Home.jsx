@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
+    DropdownMenuGroup,
+    DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/features/auth';
