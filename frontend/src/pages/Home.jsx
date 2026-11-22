@@ -64,7 +64,7 @@ function Home() {
                 content:message
             }
         ])
-       if(agents.length==0 || !agents){
+       if(selectedAgent===""){
         const res=await chat(message)
 
         setMessages((prev)=>[
@@ -177,7 +177,7 @@ function Home() {
                         </div>
 
                         <div className='z-20 w-full shrink-0 px-3 pb-3 pt-2 sm:px-5 sm:pb-4'>
-                            <form className={`mx-auto w-full max-w-2xl rounded-2xl p-3 transition-colors focus-within:border-white/25 ${darkPanel}`}>
+                            <form onSubmit={handleSubmit} className={`mx-auto w-full max-w-2xl rounded-2xl p-3 transition-colors focus-within:border-white/25 ${darkPanel}`}>
                                 <Textarea
                                 value={message}
                                 onChange={(e)=>setMessage(e.target.value)}
@@ -248,6 +248,7 @@ function Home() {
 
                                     <div className='flex items-center gap-2'>
                                         <Button
+                                        onClick={(e)=>handleSubmit(e)}
                                             type="submit"
                                             size="icon"
                                             aria-label="Send message"
