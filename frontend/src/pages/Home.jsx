@@ -1,4 +1,4 @@
-import { Bot, Check, ChevronDown, ImagePlus, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
+import { ArrowUpIcon, Bot, Check, ChevronDown, ImagePlus, LogOut, Plus, Settings2, UserRound, Workflow } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router';
 
@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/features/auth';
 import { setUserData } from '@/redux/userSlice';
 import { Textarea } from '@/components/ui/textarea';
+import { setSelectedAgent } from '@/redux/agentSlice';
+import { chat } from '@/features/chat';
 
 
 
@@ -40,18 +42,10 @@ const whiteBtn =
     "rounded-xl border-0 bg-white text-zinc-900 hover:bg-zinc-200 hover:text-zinc-900";
 function Home() {
     const [logoutLoading, setLogoutLoading] = useState(false)
-    const [messages, setMessages] = useState([
-        {
-            role: "user",
-            content: "hello"
-        },
-        {
-            role: "assistant",
-            content: "hi"
-        }
-    ])
+    const [messages, setMessages] = useState([])
     const { userData } = useSelector(state => state.user)
     const { agents, selectedAgent } = useSelector(state => state.agent)
+    const [message,setMessage]=useState("")
     const dispatch = useDispatch()
     const handleLogOut = async () => {
         console.log("click")
@@ -60,6 +54,27 @@ function Home() {
         dispatch(setUserData(null))
         setLogoutLoading(false)
 
+    }
+
+    const handleSubmit=async (e)=>{
+        e.preventDefault()
+        setMessages((prev)=>[
+            ...prev,{
+                role:"user",
+                content:message
+            }
+        ])
+       if(agents.length==0 || !agents){
+        const res=await chat(message)
+
+        setMessages((prev)=>[
+            ...prev,{
+                role:"assistant",
+                content:res?.aiResponse || res?.response?.data?.message || "Something wnt wrong"
+            }
+        ])
+        return;
+       }
     }
     return (
         <div className='relative flex h-dvh flex-col overflow-hidden bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,#2b2f3a_0%,#191b21_55%,#121317_100%)] text-white'>
@@ -164,6 +179,8 @@ function Home() {
                         <div className='z-20 w-full shrink-0 px-3 pb-3 pt-2 sm:px-5 sm:pb-4'>
                             <form className={`mx-auto w-full max-w-2xl rounded-2xl p-3 transition-colors focus-within:border-white/25 ${darkPanel}`}>
                                 <Textarea
+                                value={message}
+                                onChange={(e)=>setMessage(e.target.value)}
                                     placeholder={"Ask me anything..."}
                                     className={`min-h-20 resize-none border-0 !bg-transparent px-2 py-1.5 text-sm text-white shadow-none placeholder:text-zinc-500 focus-visible:ring-0 ${hideScrollbar}`}
                                 />
@@ -200,6 +217,10 @@ function Home() {
                                                 {
                                                     agents?.map((agent, index) => (
                                                         <DropdownMenuItem key={index}
+                                                            onClick={(e) => {
+                                                                e.preventDefault()
+                                                                dispatch(setSelectedAgent(agent.name))
+                                                            }}
                                                             className={`cursor-pointer gap-2 ${menuItem}`} >
                                                             <Bot size={15} className='shrink-0 text-violet-300' />
                                                             <span className='truncate'>{agent?.name}</span>
@@ -208,13 +229,32 @@ function Home() {
 
 
                                                         </DropdownMenuItem>
+
                                                     ))
                                                 }
+                                                <DropdownMenuSeparator className={`${menuSeparator}`} />
+                                                <DropdownMenuItem asChild className={menuItem}>
+                                                    <Link to={"/agents/new"} className='flex items-center gap-2'>
+                                                        <Plus size={15} /> Create New Agent
+                                                    </Link>
+
+                                                </DropdownMenuItem>
 
                                             </DropdownMenuContent>
 
                                         </DropdownMenu>
 
+                                    </div>
+
+                                    <div className='flex items-center gap-2'>
+                                        <Button
+                                            type="submit"
+                                            size="icon"
+                                            aria-label="Send message"
+                                            className={`size-8 shrink-0 ${whiteBtn} disabled:bg-white/10 disabled:text-zinc-500`}
+                                        >
+                                            <ArrowUpIcon size={16} />
+                                        </Button>
                                     </div>
 
                                 </div>

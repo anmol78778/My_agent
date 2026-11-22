@@ -69,7 +69,7 @@ function CreateAgent() {
     console.log(data)
     if(data?.response?.data?.message){
       console.log(data)
-      setError(data?.response?.data.message)
+      setError(data?.response?.data?.message)
       setLoading(false)
       return;
     }
